@@ -18,10 +18,9 @@ if fl is not None:
     st.write(filename)
     df = pd.read_csv(filename, encoding="ISO-8859-1")
 else:
-    # st.warning(r"Please upload a file to proceed")
-    # st.stop()
-    os.chdir(r"C:\Users\ADMIN\Documents\SalesProject")
-    df = pd.read_csv("traincsvFormated(Edited3)Reduced.csv", encoding = "ISO-8859-1")
+     st.warning(r"Please upload a file to proceed")
+     st.stop()
+
 # Ensure all columns have compatible types for Arrow serialization
 for column in df.columns:
     if df[column].dtype == 'object':
