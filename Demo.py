@@ -152,7 +152,7 @@ with col3:
 
 with col4:
     st.subheader("Sub-Category wise Sales")
-    fig = px.bar(subcategory_df, x="Sub-Category", y="Sales", text=['${:,.2f}'.format(x) for x in category_df["Sales"]],
+    fig = px.bar(subcategory_df, x="Sub-Category", y="Sales", text=['${:,.2f}'.format(x) for x in subcategory_df["Sales"]],
                  template="seaborn")
     st.plotly_chart(fig, use_container_width=True, height=150)
 #
