@@ -193,7 +193,7 @@ st.plotly_chart(fig3, use_container_width=True)
 chart1, chart2 = st.columns((2))
 with chart1:
     
-    st.markdown('<h1 style="font-size:30px;">Segment wise sales</h1>', unsafe_allow_html=True)
+    st.subheader("Segment wise Sales")
     fig = px.pie(filtered_df, values="Sales", names="Segment", template="plotly_dark")
     fig.update_layout(width=600, height=600)
     fig.update_traces(text=filtered_df["Segment"], textposition="inside")
@@ -202,7 +202,7 @@ with chart1:
 
 with chart2:
     
-    st.markdown('<h1 style="font-size:30px;">Category wise sales</h1>', unsafe_allow_html=True)
+    st.subheader("Category wise sales")
     fig = px.pie(filtered_df, values="Sales", names="Category", template="gridon")
     fig.update_layout(width=600, height=600)
     fig.update_traces(text=filtered_df["Category"], textposition="inside")
@@ -212,13 +212,21 @@ with chart2:
 segment_df = filtered_df.groupby(by=["Ship Mode"], as_index=False)["Sales"].sum()
 chart3, chart4 = st.columns((2))
 with chart3:
-    st.markdown('<h1 style="font-size:30px;">Mode of Shipment</h1>', unsafe_allow_html=True)
+    st.subheader("Mode of Shipment")
     fig = px.pie(filtered_df, values="Sales", names="Ship Mode", template="gridon")
     fig.update_layout(width=600, height=600)
     fig.update_traces(text=filtered_df["Ship Mode"], textposition="inside")
     st.plotly_chart(fig, use_container_width=True, height= 120)
 
- #   
+ #  
+state_df = filtered_df.groupby(by=["State"], as_index=False)["Sales"].sum()
+with chart4:
+    st.subheader("sales per State")
+    fig = px.pie(filtered_df, values="Sales", names="State", template="gridon")
+    fig.update_layout(width=600, height=600)
+    fig.update_traces(text=filtered_df["State"], textposition="inside")
+    st.plotly_chart(fig, use_container_width=True, height= 120)
+    
 segment_df = filtered_df.groupby(by=["Segment"], as_index=False)["Sales"].sum()
 with col1:
     st.subheader("Segment wise Sales")
@@ -264,13 +272,7 @@ print(state_city_sales.head(20))
 # fig = go.Figure(data=[go.Pie(labels=state_sales.index, values=state_sales.values)])
 # fig.update_traces(textposition='inside', textinfo='percent+label')
 #
-state_df = filtered_df.groupby(by=["State"], as_index=False)["Sales"].sum()
-with chart4:
-    st.markdown('<h1 style="font-size:30px;">sales per State</h1>', unsafe_allow_html=True)
-    fig = px.pie(filtered_df, values="Sales", names="State", template="gridon")
-    fig.update_layout(width=600, height=600)
-    fig.update_traces(text=filtered_df["State"], textposition="inside")
-    st.plotly_chart(fig, use_container_width=True, height= 120)
+
 
 
 
