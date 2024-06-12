@@ -184,11 +184,11 @@ st.header("Data Exploration")
 col1, col2 = st.columns((2))
 with col1:
     with st.expander("Show Dataset Head"):
-        st.subheader("First 5 Rows of the Dataset".style.background_gradient(cmap="Blues"))
+        st.subheader("First 5 Rows of the Dataset")
         st.write(df.head().style.background_gradient(cmap="Blues"))
 with col2:
     with st.expander("Show Dataset Tail"):
-        st.subheader("Last 5 Rows of the Dataset".style.background_gradient(cmap="Blues"))
+        st.subheader("Last 5 Rows of the Dataset")
         st.write(df.tail().style.background_gradient(cmap="Blues"))
 
 col3, col4 = st.columns((2))
