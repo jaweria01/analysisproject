@@ -200,7 +200,7 @@ with col3:
         buffer = io.StringIO()
         df.info(buf=buffer)
         s = buffer.getvalue()
-        st.text(s.style.background_gradient(cmap="Blues"))
+        st.text(s)
 with col4:
     with st.expander("Show DataSet Shape"):
         st.subheader("Dataset Shape")
