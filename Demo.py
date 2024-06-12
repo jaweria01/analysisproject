@@ -394,7 +394,18 @@ with col:
          st.write(subcategory_count.style.background_gradient(cmap="Blues"))
          csv = subcategory_count.to_csv(index=False).encode('utf-8')
          st.download_button("Download Data", data=csv, file_name="Subcatcount.csv", mime="text/csv",
-                           help='Click here to download the data as a CSV file') 
+                           help='Click here to download the data as a CSV file')
+
+# sub-category sales
+cl8 = st.columns((1))
+col = cl8[0]
+with col:
+    with st.expander("TopSub-Category_ViewData"):
+        subcategory_df = filtered_df.groupby(by="Sub-Category", as_index=False, ascending=False)["Sales"].sum()
+        st.write(subcategory_df.style.background_gradient(cmap="Blues"))
+        csv = subcategory_df.to_csv(index=False).encode('utf-8')
+        st.download_button("Download Data", data=csv, file_name="Category.csv", mime="text/csv",
+                           help='Click here to download the data as a CSV file')
         
 # Time series analysis
 filtered_df["month_year"] = filtered_df["Order Date"].dt.to_period("M")
