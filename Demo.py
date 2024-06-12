@@ -391,7 +391,7 @@ with col:
     with st.expander("Sub_Category Count"):
          subcategory_count = filtered_df.groupby(by="Category", as_index=False)["Sub-Category"].sum().nunique()
          subcategory_count_df = subcategory_count.nunique().reset_index()
-         st.write(subcategory_count_df.style.background_gradient(cmap = "Blues"))
+         st.write(subcategory_count_df)
          csv = subcategory_count_df.to_csv(index=False).encode('utf-8')
          st.download_button("Download Data", data=csv, file_name="Subcatcount.csv", mime="text/csv",
                            help='Click here to download the data as a CSV file') 
