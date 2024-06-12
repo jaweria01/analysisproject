@@ -235,9 +235,13 @@ with col8:
 
 col9, col10 = st.columns([1,1])
 with col9:
-    with st.expander(styled_button("Show DS Description", "btn_describe")):
+    # if styled_button("Show DS Description", "btn_describe"):
+    #     st.subheader("Statistical Summary")
+    #     st.write(df.describe().T)
+    with st.expander("Show DS Description"):
         st.subheader("Statistical Summary")
         st.write(df.describe().T)
+
 with col10:       
     if styled_button("Check DS Duplicates", "btn_duplicates"):
         if df.duplicated().sum() > 0:
