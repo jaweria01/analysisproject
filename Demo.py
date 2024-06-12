@@ -325,7 +325,8 @@ with col6:
     fig = px.bar(region_df, x="Region", y="Sales", text=['${:,.2f}'.format(x) for x in region_df["Sales"]],
                  template="seaborn")
     st.plotly_chart(fig, use_container_width=True, height=150)
-
+#    
+st.subheader("Sales Count of important Elements")
 cl1, cl2 = st.columns((2))
 with cl1:
     with st.expander("Category_ViewData"):
