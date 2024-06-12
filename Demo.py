@@ -210,7 +210,7 @@ col5, col6 = st.columns((2))
 with col5:
     with st.expander("Show Dataset Columns"):
         st.subheader("Dataset Columns")
-        st.write(df.columns.tolist().style.applymap(lambda _: 'background-color: lightblue'))
+        st.write(df.columns.tolist().df.style.applymap(lambda _: 'background-color: lightblue'))
 
 with col6:
     with st.expander("Show Null Values"):
