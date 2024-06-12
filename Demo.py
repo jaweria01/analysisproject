@@ -215,7 +215,7 @@ with col5:
 with col6:
     with st.expander("Show Null Values"):
         st.subheader("Missing Values in the Dataset")
-        st.write(df.isnull().sum().style.background_gradient(cmap="Blues"))
+        st.write(df.isnull().sum())
 
 # Display data cleaning options
 st.header("Data Cleaning")
@@ -224,16 +224,16 @@ col7, col8 = st.columns([1, 1])
 with col7:
     with st.expander("Fill Missing Values"):
         df["Postal Code"].fillna(0, inplace=True)
-        st.write("Missing values in 'Postal Code' have been filled with 0.".style.background_gradient(cmap="Blues"))
+        st.write("Missing values in 'Postal Code' have been filled with 0.")
         df['Postal Code'] = df['Postal Code'].astype(int)
-        st.write("'Postal Code' column type has been converted to int.".style.background_gradient(cmap="Blues"))
+        st.write("'Postal Code' column type has been converted to int.")
 with col8:
     with st.expander("Show Updated Info"):
         st.subheader("Updated Dataset Information")
         buffer = io.StringIO()
         df.info(buf=buffer)
         s = buffer.getvalue()
-        st.text(s).style.background_gradient(cmap="Blues")
+        st.text(s)
 
 col9, col10 = st.columns([1,1])
 with col9:
