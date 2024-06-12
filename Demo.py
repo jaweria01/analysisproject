@@ -263,7 +263,7 @@ with col11:
             outliers[col] = find_outliers_zscore(df[col])
         st.subheader("Outliers Detected using Z-score")
         for col, indices in outliers.items():
-            st.write(f"Outliers in {col}: {df.iloc[indices]}".style.background_gradient(cmap="Blues"))
+            st.write(f"Outliers in {col}: {df.iloc[indices]}")
 
 with col12:
     with st.expander("Find Outliers (IQR)"):
