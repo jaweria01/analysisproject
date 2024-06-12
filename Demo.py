@@ -177,7 +177,9 @@ def find_outliers_iqr(data):
     IQR = Q3 - Q1
     outliers = ((data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR)))
     return outliers
-
+###########################
+def blue_background(val):
+    return 'background-color: lightblue'
 # Display data exploration options
 st.header("Data Exploration")
 
@@ -202,13 +204,13 @@ with col3:
 with col4:
     with st.expander("Show DataSet Shape"):
         st.subheader("Dataset Shape")
-        st.write(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}".style.background_gradient(cmap="Blues"))
+        st.write(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}".style.applymap(lambda _: 'background-color: lightblue'))
 
 col5, col6 = st.columns((2))
 with col5:
     with st.expander("Show Dataset Columns"):
         st.subheader("Dataset Columns")
-        st.write(df.columns.tolist().style.background_gradient(cmap="Blues"))
+        st.write(df.columns.tolist().style.applymap(lambda _: 'background-color: lightblue'))
 
 with col6:
     with st.expander("Show Null Values"):
