@@ -153,7 +153,7 @@ def styled_button(label, key, button_color='blue', text_color='white'):
                 margin: 4px 2px;
                 cursor: pointer;
                 border-radius: 12px;
-                width: 250px;  /* Fixed width */
+                width: 100%;  /* Fixed width */
                 height: 80px;  /* Fixed height */
             }}
             div.stButton > button#{key}:hover {{
