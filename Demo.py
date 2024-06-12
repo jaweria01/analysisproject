@@ -204,7 +204,7 @@ with col3:
 with col4:
     with st.expander("Show DataSet Shape"):
         st.subheader("Dataset Shape")
-        st.write(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}".style.applymap(lambda _: 'background-color: lightblue'))
+        st.write(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")
 
 col5, col6 = st.columns((2))
 with col5:
