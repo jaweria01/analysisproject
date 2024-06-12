@@ -213,7 +213,10 @@ with col5:
         st.write(df.columns.tolist())
 
 with col6:
-    with st.expander("Show Null Values"):
+    # with st.expander("Show Null Values"):
+    #     st.subheader("Missing Values in the Dataset")
+    #     st.write(df.isnull().sum())
+    if styled_button("Show Null Values", "btn_nulls"):
         st.subheader("Missing Values in the Dataset")
         st.write(df.isnull().sum())
 
