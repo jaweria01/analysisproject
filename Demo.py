@@ -162,7 +162,7 @@ def styled_button(label, key, button_color='blue', text_color='white'):
         </style>
     ''', unsafe_allow_html=True)
 
-    return st.button(label, key=key, button_color='blue', text_color='white')
+    return st.button(label, key=key)
 
 # Display data exploration options
 st.header("Data Exploration")
