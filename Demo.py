@@ -403,8 +403,9 @@ col = cl8[0]
 with col:
     with st.expander("TopSub-Category_ViewData"):
         #subcategory_df = filtered_df.groupby(by="Sub-Category", as_index=False, ascending=False)["Sales"].sum()
-        subcategory_df = numeric_df.groupby(by="Sub-Category", as_index=False).sum().sort_values(by="Sales", ascending=False)
-        #subcategory_df = filtered_df.groupby(by="Sub-Category", as_index=False).sum().sort_values(by="Sales", ascending=False)
+        #subcategory_df = numeric_df.groupby(by="Sub-Category", as_index=False).sum().sort_values(by="Sales", ascending=False)
+        #category = filtered_df.groupby(by="Category", as_index=False)["Sales"].sum()
+        subcategory_df = filtered_df.groupby(by="Sub-Category", as_index = False)["Sales"].sum()
         st.write(subcategory_df.style.background_gradient(cmap="Blues"))
         csv = subcategory_df.to_csv(index=False).encode('utf-8')
         st.download_button("Download Data", data=csv, file_name="TopCategory.csv", mime="text/csv",key="download_button1",
