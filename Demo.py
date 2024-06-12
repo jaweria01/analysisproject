@@ -113,6 +113,7 @@ else:
 category_df = filtered_df.groupby(by=["Category"], as_index=False)["Sales"].sum()
 #
 subcategory_df = filtered_df.groupby(by=["Sub-Category"], as_index=False)["Sales"].sum()
+subcategory_count =  filtered_df.groupby(by="Category", as_index=False)["Sub-Category"].sum().nunique()
 #
 city_df = filtered_df.groupby(by=["City"], as_index=False)["Sales"].sum()
 #
@@ -376,6 +377,21 @@ with cl6:
         st.write(customer_df.style.background_gradient(cmap="Blues"))
         csv = customer_df.to_csv(index=False).encode('utf-8')
         st.download_button("Download Data", data=csv, file_name="Customer.csv", mime="text/csv",
+                           help='Click here to download the data as a CSV file') 
+        
+# Group the data by product category and how many sub-category it has 
+# subcategory_count = df.groupby('Category')['Sub-Category'].nunique().reset_index()
+# sort by ascending order
+# subcategory_count = subcategory_count.sort_values(by='Sub-Category', ascending=False)
+# Print the states 
+# print(subcategory_count)
+cl7 = st.columns((1))
+with cl7:
+    with st.expander("Sub_Category Count"):
+         subcategory = filtered_df.groupby(by="Category", as_index=False)["Sub-Category"].sum().nunique()
+         st.write(subcategory_count.style.background_gradient(cmap = "Blues"))
+         csv = subcategory_count.to_csv(index=False).encode('utf-8')
+         st.download_button("Download Data", data=csv, file_name="Subcatcount.csv", mime="text/csv",
                            help='Click here to download the data as a CSV file') 
         
 # Time series analysis
