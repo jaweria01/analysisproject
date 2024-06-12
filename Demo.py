@@ -213,12 +213,12 @@ with col5:
         st.write(df.columns.tolist())
 
 with col6:
-    # with st.expander("Show Null Values"):
-    #     st.subheader("Missing Values in the Dataset")
-    #     st.write(df.isnull().sum())
-    if styled_button("Show Null Values", "btn_nulls"):
+    with st.expander("Show Null Values"):
         st.subheader("Missing Values in the Dataset")
         st.write(df.isnull().sum())
+    # if styled_button("Show Null Values", "btn_nulls"):
+    #     st.subheader("Missing Values in the Dataset")
+    #     st.write(df.isnull().sum())
 # Display data cleaning options
 st.header("Data Cleaning")
 
@@ -244,7 +244,7 @@ with col9:
     #     st.write(df.describe().T)
     with st.expander("Show DS Description"):
         st.subheader("Statistical Summary")
-        st.write(df.describe().T.style.background_gradient(cmap="Blues"))
+        st.write(df.describe().T.style.applymap(lambda _: 'background-color: #CBC3E3'))
 
 with col10:       
     with st.expander("Check DS Duplicates"):
@@ -255,17 +255,18 @@ with col10:
 
 col11, col12 = st.columns([1, 1])
 with col11:
-    if styled_button("Find Outliers (Z-score)", "btn_zscore_outliers"):
+    # if styled_button("Find Outliers (Z-score)", "btn_zscore_outliers"):
+    with st.expander("Find Outliers (Z-score)"):
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         outliers = {}
         for col in numeric_cols:
             outliers[col] = find_outliers_zscore(df[col])
         st.subheader("Outliers Detected using Z-score")
         for col, indices in outliers.items():
-            st.write(f"Outliers in {col}: {df.iloc[indices]}")
+            st.write(f"Outliers in {col}: {df.iloc[indices]}".style.background_gradient(cmap="Blues"))
 
 with col12:
-    if styled_button("Find Outliers (IQR)", "btn_iqr_outliers"):
+    with st.expander("Find Outliers (IQR)"):
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         outliers = {}
         for col in numeric_cols:
@@ -273,7 +274,7 @@ with col12:
         st.subheader("Outliers Detected using IQR")
         for col, data in outliers.items():
             st.write(f"Outliers in {col}:")
-            st.write(data)
+            st.write(data.style.applymap(lambda _: 'background-color: lightblue'))
 
 # Download cleaned dataset
 st.header("Download Cleaned Dataset")
