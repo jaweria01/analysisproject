@@ -132,63 +132,99 @@ year_df = filtered_df.groupby(filtered_df["month_year"], as_index=False)["Sales"
 # chatgpt
 # year_df = df["Order Date"].dt.year.groupby(df["Order Date"].dt.year)["Sales"].sum()
 # year_df = df.groupby(df["Order Date"].dt.year)["Sales"].sum()
+# Define a function to style the buttons
+def styled_button(label, button_id, button_color, button_style):
+    st.markdown(f'''
+        <style>
+            #{button_id} {{
+                background-color: {button_color};
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 12px;
+                {button_style}
+            }}
+            #{button_id}:hover {{
+                background-color: darken({button_color}, 10%);
+            }}
+        </style>
+        <button id="{button_id}">{label}</button>
+    ''', unsafe_allow_html=True)
+
+# Display data exploration options
 st.header("Data Exploration")
 
-if st.button("Show Head"):
-    st.subheader("First 5 Rows of the Dataset")
-    st.write(df.head())
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("Show Head", key="btn_head"):
+        st.subheader("First 5 Rows of the Dataset")
+        st.write(df.head())
+    if st.button("Show Tail", key="btn_tail"):
+        st.subheader("Last 5 Rows of the Dataset")
+        st.write(df.tail())
 
-if st.button("Show Tail"):
-    st.subheader("Last 5 Rows of the Dataset")
-    st.write(df.tail())
+with col2:
+    if st.button("Show Info", key="btn_info"):
+        st.subheader("Dataset Information")
+        buffer = io.StringIO()
+        df.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+    if st.button("Show Shape", key="btn_shape"):
+        st.subheader("Dataset Shape")
+        st.write(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")
 
-if st.button("Show Info"):
-    st.subheader("Dataset Information")
-    buffer = io.StringIO()
-    df.info(buf=buffer)
-    s = buffer.getvalue()
-    st.text(s)
-
-if st.button("Show Shape"):
-    st.subheader("Dataset Shape")
-    st.write(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")
-
-if st.button("Show Columns"):
-    st.subheader("Dataset Columns")
-    st.write(df.columns.tolist())
-
-if st.button("Show Null Values"):
-    st.subheader("Missing Values in the Dataset")
-    st.write(df.isnull().sum())
+col3, col4 = st.columns(2)
+with col3:
+    if st.button("Show Columns", key="btn_columns"):
+        st.subheader("Dataset Columns")
+        st.write(df.columns.tolist())
+    if st.button("Show Null Values", key="btn_nulls"):
+        st.subheader("Missing Values in the Dataset")
+        st.write(df.isnull().sum())
 
 # Display data cleaning options
 st.header("Data Cleaning")
 
-if st.button("Fill Missing Postal Codes"):
-    df["Postal Code"].fillna(0, inplace=True)
-    st.write("Missing values in 'Postal Code' have been filled with 0.")
-    df['Postal Code'] = df['Postal Code'].astype(int)
-    st.write("'Postal Code' column type has been converted to int.")
-
-if st.button("Show Updated Info"):
-    st.subheader("Updated Dataset Information")
-    buffer = io.StringIO()
-    df.info(buf=buffer)
-    s = buffer.getvalue()
-    st.text(s)
-
-if st.button("Show Describe"):
-    st.subheader("Statistical Summary")
-    st.write(df.describe().T)
-
-if st.button("Check Duplicates"):
-    if df.duplicated().sum() > 0:
-        st.warning("Duplicates exist in the DataFrame.")
-    else:
-        st.success("No duplicates found in the DataFrame.")
+col5, col6 = st.columns(2)
+with col5:
+    if st.button("Fill Missing Postal Codes", key="btn_fill_missing"):
+        df["Postal Code"].fillna(0, inplace=True)
+        st.write("Missing values in 'Postal Code' have been filled with 0.")
+        df['Postal Code'] = df['Postal Code'].astype(int)
+        st.write("'Postal Code' column type has been converted to int.")
+    if st.button("Show Updated Info", key="btn_updated_info"):
+        st.subheader("Updated Dataset Information")
+        buffer = io.StringIO()
+        df.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+with col6:
+    if st.button("Show Describe", key="btn_describe"):
+        st.subheader("Statistical Summary")
+        st.write(df.describe().T)
+    if st.button("Check Duplicates", key="btn_duplicates"):
+        if df.duplicated().sum() > 0:
+            st.warning("Duplicates exist in the DataFrame.")
+        else:
+            st.success("No duplicates found in the DataFrame.")
+            
+# Download cleaned dataset
+st.header("Download Cleaned Dataset")
+csv = df.to_csv(index=False).encode('utf-8')
+st.download_button('Download Data', data=csv, file_name="cleaned_data.csv", mime="text/csv")
 
 # Display completion message
 st.success("Data exploration and cleaning operations are complete.")
+
+
+
 
 ###############################
 col1, col2 = st.columns((2))
