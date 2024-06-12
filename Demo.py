@@ -133,22 +133,25 @@ year_df = filtered_df.groupby(filtered_df["month_year"], as_index=False)["Sales"
 # year_df = df["Order Date"].dt.year.groupby(df["Order Date"].dt.year)["Sales"].sum()
 # year_df = df.groupby(df["Order Date"].dt.year)["Sales"].sum()
 # Define a function to style the buttons
-def styled_button(label, button_id, button_color, button_style):
+def styled_button(label, button_id, button_color = 'lightblue',text_color='black', button_style =''):
     st.markdown(f'''
         <style>
             #{button_id} {{
                 background-color: {button_color};
-                color: white;
+                color: {text_color};
+                font-weight: bold;
                 border: none;
-                padding: 10px 20px;
+                padding: 15px 30px;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                font-size: 14px;
+                font-size: 16px;
                 margin: 4px 2px;
                 cursor: pointer;
                 border-radius: 12px;
                 {button_style}
+                width: 200px;  /* Fixed width */
+                height: 60px;  /* Fixed height */
             }}
             #{button_id}:hover {{
                 background-color: darken({button_color}, 10%);
@@ -214,7 +217,7 @@ with col6:
             st.warning("Duplicates exist in the DataFrame.")
         else:
             st.success("No duplicates found in the DataFrame.")
-            
+
 # Download cleaned dataset
 st.header("Download Cleaned Dataset")
 csv = df.to_csv(index=False).encode('utf-8')
