@@ -132,25 +132,20 @@ year_df = filtered_df.groupby(filtered_df["month_year"], as_index=False)["Sales"
 # chatgpt
 # year_df = df["Order Date"].dt.year.groupby(df["Order Date"].dt.year)["Sales"].sum()
 # year_df = df.groupby(df["Order Date"].dt.year)["Sales"].sum()
-# Define a function to style the buttons
-##################################
 
-
-
-
-st.title(" :bar_chart: Superstore Data Cleaning Interface")
+#################################
   
 
 # Define a function to style the buttons
-def styled_button(label, key):
+def styled_button(label, key, button_color='blue', text_color='white'):
     st.markdown(f'''
         <style>
             div.stButton > button#{key} {{
-                background-color: #ADD8E6;
-                color: black;
+                background-color: {button_color};
+                color: {text_color};
                 font-weight: bold;
                 border: none;
-                padding: 15px 30px;
+                padding: 20px 40px;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
@@ -158,6 +153,8 @@ def styled_button(label, key):
                 margin: 4px 2px;
                 cursor: pointer;
                 border-radius: 12px;
+                width: 250px;  /* Fixed width */
+                height: 80px;  /* Fixed height */
             }}
             div.stButton > button#{key}:hover {{
                 background-color: #87CEEB;
@@ -165,7 +162,7 @@ def styled_button(label, key):
         </style>
     ''', unsafe_allow_html=True)
 
-    return st.button(label, key=key)
+    return st.button(label, key=key, button_color='blue', text_color='white')
 
 # Display data exploration options
 st.header("Data Exploration")
