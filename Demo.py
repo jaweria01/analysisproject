@@ -35,9 +35,8 @@ for column in df.columns:
 c1, c2 = st.columns((2))
 #df["Order Date"] = pd.to_datetime(df["Order Date"],format='%d/%m/%Y', errors ='coerce')
 df["Order Date"] = pd.to_datetime(df["Order Date"], format='%d/%m/%Y', errors='coerce')
-
-
 # Getting the min and max date
+# feature Engineering
 startDate = pd.to_datetime(df["Order Date"],format='%d/%m/%Y', errors ='coerce').min()
 endDate = pd.to_datetime(df["Order Date"],format='%d/%m/%Y', errors ='coerce').max()
 
@@ -216,46 +215,14 @@ with col5:
         st.write(df.columns.tolist())
 
 with col6:
-    with st.expander("Show Null Values"):
-        st.markdown("<h6 style='text-align: left; color: red;'>Missing Values in the Dataset</h6>", unsafe_allow_html=True)
-        st.write(df.isnull().sum())
+
+     with st.expander("Show DS Description"):
+        st.markdown("<h6 style='text-align: left; color: black;'>Statistical Summery</h6>", unsafe_allow_html=True)
+        st.write(df.describe().T.style.applymap(lambda _: 'background-color: #CBC3E3'))
     # if styled_button("Show Null Values", "btn_nulls"):
     #     st.subheader("Missing Values in the Dataset")
     #     st.write(df.isnull().sum())
 # Display data cleaning options
-st.subheader("Data Cleaning")
-
-col7, col8 = st.columns([1, 1])
-with col7:
-    with st.expander("Fill Missing Values"):
-        df["Postal Code"].fillna(0, inplace=True)
-        st.write("Missing values in 'Postal Code' have been filled with 0.")
-        df['Postal Code'] = df['Postal Code'].astype(int)
-        st.write("'Postal Code' column type has been converted to int.")
-with col8:
-    with st.expander("Show Updated Info"):
-        st.markdown("<h6 style='text-align: left; color: black;'>Updated Dataset Information</h6>", unsafe_allow_html=True)
-        buffer = io.StringIO()
-        df.info(buf=buffer)
-        s = buffer.getvalue()
-        st.text(s)
-
-col9, col10 = st.columns([1,1])
-with col9:
-    # if styled_button("Show DS Description", "btn_describe"):
-    #     st.subheader("Statistical Summary")
-    #     st.write(df.describe().T)
-    with st.expander("Show DS Description"):
-        st.markdown("<h6 style='text-align: left; color: black;'>Statistical Summery</h6>", unsafe_allow_html=True)
-        st.write(df.describe().T.style.applymap(lambda _: 'background-color: #CBC3E3'))
-
-with col10:       
-    with st.expander("Check DS Duplicates"):
-        if df.duplicated().sum() > 0:
-            st.warning("Duplicates exist in the DataFrame.")
-        else:
-            st.success("No duplicates found in the DataFrame.")
-
 col11, col12 = st.columns([1, 1])
 with col11:
     # if styled_button("Find Outliers (Z-score)", "btn_zscore_outliers"):
@@ -278,6 +245,50 @@ with col12:
         for col, data in outliers.items():
             st.write(f"Outliers in {col}:")
             st.write(data.style.applymap(lambda _: 'background-color: lightblue'))
+
+#
+st.subheader("Data Cleaning")
+
+col7, col8 = st.columns([1, 1])
+with col7:
+    with st.expander("Fill Missing Values"):
+        df["Postal Code"].fillna(0, inplace=True)
+        st.write("Missing values in 'Postal Code' have been filled with 0.")
+        df['Postal Code'] = df['Postal Code'].astype(int)
+        st.write("'Postal Code' column type has been converted to int.")
+        df["Sales"].fillna(0, inplace=True)
+        st.write("Missing values in 'Sales' have been filled with 0.")
+        df['Sales'] = df['Sales'].astype(int)
+        st.write("Missing values in 'sales' have been filled with int.")
+with col8:
+
+    with st.expander("Show Null Values"):
+        st.markdown("<h6 style='text-align: left; color: red;'>Missing Values in the Dataset</h6>", unsafe_allow_html=True)
+        st.write(df.isnull().sum())
+
+col9, col10 = st.columns([1,1])
+with col9:
+    # if styled_button("Show DS Description", "btn_describe"):
+    #     st.subheader("Statistical Summary")
+    #     st.write(df.describe().T)
+
+
+    with st.expander("Show Updated Info"):
+        st.markdown("<h6 style='text-align: left; color: black;'>Updated Dataset Information</h6>", unsafe_allow_html=True)
+        buffer = io.StringIO()
+        df.info(buf=buffer)
+        s = buffer.getvalue()
+        st.text(s)
+
+with col10:       
+    with st.expander("Check DS Duplicates"):
+        if df.duplicated().sum() > 0:
+            st.warning("Duplicates exist in the DataFrame.")
+        else:
+            st.success("No duplicates found in the DataFrame.")
+
+
+
 
 # Download cleaned dataset
 st.subheader("Download Cleaned Dataset")
@@ -529,7 +540,12 @@ print(state_city_sales.head(20))
 # fig = go.Figure(data=[go.Pie(labels=state_sales.index, values=state_sales.values)])
 # fig.update_traces(textposition='inside', textinfo='percent+label')
 #
+punjab_data = df[df["State"] == "Punjab"]
 
+# Plot monthly sales trend for Punjab
+punjab_sales_trend = punjab_data.groupby(punjab_data["Order Date"].dt.to_period("M"))["Sales"].sum().reset_index()
+fig = px.line(punjab_sales_trend, x="Order Date", y="Sales", title="Monthly Sales Trend in Punjab")
+st.plotly_chart(fig)
 
 
 
