@@ -540,12 +540,7 @@ print(state_city_sales.head(20))
 # fig = go.Figure(data=[go.Pie(labels=state_sales.index, values=state_sales.values)])
 # fig.update_traces(textposition='inside', textinfo='percent+label')
 #
-punjab_data = df[df["State"] == "Punjab"]
 
-# Plot monthly sales trend for Punjab
-punjab_sales_trend = punjab_data.groupby(punjab_data["Order Date"].dt.to_period("M"))["Sales"].sum().reset_index()
-fig = px.line(punjab_sales_trend, x="Order Date", y="Sales", title="Monthly Sales Trend in Punjab")
-st.plotly_chart(fig)
 
 
 
